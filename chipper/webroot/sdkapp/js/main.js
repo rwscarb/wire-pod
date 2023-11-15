@@ -133,25 +133,33 @@ function getPhotos() {
           photoSection.appendChild(noPhotos)
           return
         }
-        imageIds = JSON.parse(xhr.response)
-        for (var i = 0; i < imageIds.length; i++){
-          imgId = imageIds[i]
-          var thumb = document.createElement("div")
-          var thumbLink = document.createElement("a")
-          var thumbPic = document.createElement("img")
-          var thumbDelete = document.createElement("button")
-          thumbPic.src = "/api-sdk/get_image_thumb?serial=" + esn + "&id=" + imgId
-          //thumb.classList = "center"
-          thumbLink.classList = "center"
-          thumbDelete.classList = "center"
-          thumbLink.href = "/api-sdk/get_image?serial=" + esn + "&id=" + imgId
-          thumbLink.appendChild(thumbPic)
-          thumbDelete.onclick = function(){deletePhoto(imgId)}
-          thumbDelete.innerHTML = "Delete"
-          thumb.appendChild(thumbLink)
-          thumb.appendChild(thumbDelete)
-          photoSection.appendChild(thumb)
-        }
+        var imageIds = JSON.parse(xhr.response)
+        Promise.each(imageIds, function (imgId) {
+            return new Promise(function (resolve, reject) {
+                xhr = new XMLHttpRequest()
+                xhr.open("GET", "/api-sdk/get_image_thumb?serial=" + esn + "&id=" + imgId)
+                xhr.responseType = "blob"
+                xhr.send()
+                xhr.onload = function () {
+                    let thumb = document.createElement("div")
+                    let thumbLink = document.createElement("a")
+                    let thumbPic = document.createElement("img")
+                    let thumbDelete = document.createElement("button")
+                    const blob = new Blob([xhr.response], {type: "image/jpeg"})
+                    thumbPic.src = URL.createObjectURL(blob)
+                    thumbLink.classList = "center"
+                    thumbDelete.classList = "center"
+                    thumbLink.href = "/api-sdk/get_image?serial=" + esn + "&id=" + imgId
+                    thumbLink.appendChild(thumbPic)
+                    thumbDelete.onclick = function(){deletePhoto(imgId)}
+                    thumbDelete.innerHTML = "Delete"
+                    thumb.appendChild(thumbLink)
+                    thumb.appendChild(thumbDelete)
+                    photoSection.appendChild(thumb)
+                    resolve()
+                }
+            });
+        })
     };
 }
 
