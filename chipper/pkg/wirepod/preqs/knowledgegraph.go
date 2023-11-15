@@ -262,52 +262,6 @@ func openaiRequest(transcribedText string) OpenAIResponse {
 			Instructions: &PrimeDirective,
 			Tools: []openai.AssistantTool{
 				{
-					Type: openai.AssistantToolTypeFunction,
-					Function: &openai.FunctionDefinition{
-						Name:        "intent_take_selfie",
-						Description: "Take a selfie. A photo of one's self.",
-						Parameters: FunctionParams{
-							Type: "object",
-							Properties: map[string]FunctionParam{
-								"user": {
-									Type:        "string",
-									Description: "The user to take a selfie of",
-								},
-							},
-							Required: []string{"user"},
-						},
-					},
-				},
-				{
-					Type: openai.AssistantToolTypeFunction,
-					Function: &openai.FunctionDefinition{
-						Name:        "intent_imperative_eyecolor_specific_extend",
-						Description: "Change the color of your eyes. Possible colors are: purple, blue, yellow, teal, orange",
-						Parameters: FunctionParams{
-							Type: "object",
-							Properties: map[string]FunctionParam{
-								"eye_color": {
-									Type:        "string",
-									Description: "The color to change your eyes to",
-								},
-							},
-							Required: []string{"eye_color"},
-						},
-					},
-				},
-				{
-					Type: openai.AssistantToolTypeFunction,
-					Function: &openai.FunctionDefinition{
-						Name:        "intent_play_fistbump",
-						Description: "Give a playful fist bump",
-						Parameters: FunctionParams{
-							Type:       "object",
-							Properties: map[string]FunctionParam{},
-							Required:   []string{},
-						},
-					},
-				},
-				{
 					Type: openai.AssistantToolTypeCodeInterpreter,
 				},
 			},

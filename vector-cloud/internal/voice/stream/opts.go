@@ -2,8 +2,6 @@ package stream
 
 import (
 	"context"
-	"github.com/digital-dream-labs/vector-cloud/internal/voice"
-
 	"github.com/digital-dream-labs/vector-cloud/internal/clad/cloud"
 
 	"github.com/digital-dream-labs/vector-cloud/internal/token"
@@ -42,9 +40,7 @@ func WithIntentOptions(opts chipper.IntentOpts, mode cloud.StreamType) Option {
 	return func(o *options) {
 		o.mode = mode
 		o.intentOpts = &opts
-		o.intentOpts.Timeout = voice.DefaultTimeout
 		o.streamOpts = &opts.StreamOpts
-		o.streamOpts.Timeout = voice.DefaultTimeout
 	}
 }
 
@@ -52,9 +48,7 @@ func WithKnowledgeGraphOptions(opts chipper.KGOpts) Option {
 	return func(o *options) {
 		o.mode = cloud.StreamType_KnowledgeGraph
 		o.kgOpts = &opts
-		o.kgOpts.Timeout = voice.DefaultTimeout
 		o.streamOpts = &opts.StreamOpts
-		o.streamOpts.Timeout = voice.DefaultTimeout
 	}
 }
 
@@ -62,9 +56,7 @@ func WithIntentGraphOptions(opts chipper.IntentGraphOpts, mode cloud.StreamType)
 	return func(o *options) {
 		o.mode = mode
 		o.intentGraphOpts = &opts
-		o.intentGraphOpts.Timeout = voice.DefaultTimeout
 		o.streamOpts = &opts.StreamOpts
-		o.streamOpts.Timeout = voice.DefaultTimeout
 	}
 }
 
