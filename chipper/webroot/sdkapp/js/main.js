@@ -141,10 +141,10 @@ function getPhotos() {
                 xhr.responseType = "blob"
                 xhr.send()
                 xhr.onload = function () {
-                    let thumb = document.createElement("div")
-                    let thumbLink = document.createElement("a")
-                    let thumbPic = document.createElement("img")
-                    let thumbDelete = document.createElement("button")
+                    const thumb = document.createElement("div")
+                    const thumbLink = document.createElement("a")
+                    const thumbPic = document.createElement("img")
+                    const thumbDelete = document.createElement("button")
                     const blob = new Blob([xhr.response], {type: "image/jpeg"})
                     thumbPic.src = URL.createObjectURL(blob)
                     thumbLink.classList = "center"
